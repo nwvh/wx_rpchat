@@ -195,11 +195,11 @@ RegisterCommand('do', function(source, args, raw)
 end,false)
 
 RegisterCommand('try', function(source, args, raw)
-  local result = "NE"
+  local result = "NO"
   local name = GetRealPlayerName(source)
   local random = math.random(1,2)
   if random == 1 then
-    result = "ANO"
+    result = "YES"
     TriggerClientEvent('wx_rpchat:sendTry', -1, source, name, result, { 255, 198, 0 })
     TriggerClientEvent('3dme:triggerDisplay', -1, "* "..result.." *", source)
   else
