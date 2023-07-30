@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://use.fontawesome.com/releases/v5.6.3/css/all.css');
+
+.color-0{color: #ffffff;}
+.color-1{color: #ff4444;}
+.color-2{color: #16cf16;}
+.color-3{color: #ffe600;}
+.color-4{color: #0099cc;}
+.color-5{color: #1100ff;}
+.color-6{color: #ac06ff;}
+.color-7{color: #868484;}
+.color-8{color: #cc0000;}
+.color-9{color: #cc0068;}
+
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.no-grow {
+  flex-grow: 0;
+}
+
+em {
+  font-style: normal;
+}
+
+#app {
+  font-family: 'Poppins', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: white;
+}
+
+.chat-window {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 30%;
+  height: 240px;
+  background-color: rgba(30, 30, 46, 0.7);
+  -webkit-animation-duration: 2s;
+}
+
+
+.chat-messages {
+  position: relative;
+  height: 95%;
+  font-size: 1.0rem;
+  margin: 10px;
+  text-shadow: 2px 2px 2px #1E1E2E;
+
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+
+.chat-input {
+  font-size: 1.0rem;
+  text-shadow: 2px 2px 2px #000000;
+  position: absolute;
+
+  top: 250px;
+  left: 15px;
+  width: 38%;
+
+  box-sizing: border-box;
+}
+
+.prefix {
+  position: absolute;
+  margin-top: 4px;
+  left: 5px;
+  color: rgb(30, 200, 200)
+}
+
+.suffix {
+  transition: color .4s ease-in-out;
+  position: absolute;
+  /* margin-left: 300px; */
+  left: 50px;
+  color: white;
+}
+
+textarea {
+  transition: background-color .4s ease-in-out;
+  font-size: 1.0rem;
+  display: block;
+  /* text-shadow: 2px 2px 2px #000000; */
+  box-sizing: border-box;
+  padding: 5px;
+  padding-left: 27px;
+  color: white;
+  background-color: rgba(30, 30, 46, 0.50);
+  width: 70%;
+  border-width: 0;
+  height: 34px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.textareaError {
+  text-shadow: none!important;
+  transition: background-color .4s ease-in-out;
+  background-color: rgba(184, 47, 47, 0.281);
+}
+
+.loocError {
+  transition: color .4s ease-in-out;
+  color: rgb(255, 0, 0);
+  animation: shake 0.7s;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+textarea:focus, input:focus {
+    outline: none;
+}
+
+.msg {
+  margin-bottom: 3px;
+}
+
+.multiline {
+  margin-left: 1.5rem;
+  text-indent: -1.5rem;
+  white-space: pre-line;
+}
+
+.suggestions {
+  list-style-type: none;
+  padding: 5px;
+  padding-left: 27px;
+  /* padding-top: 10px; */
+  text-shadow: 2px 2px 2px #000000;
+  font-size: 1.0rem;
+  box-sizing: border-box;
+  color: rgba(255, 255, 255, 0.74);
+  border-radius: 4px;
+  background-color: rgba(30, 30, 46, 0.767);
+  width: 70%;
+}
+
+.help {
+  color: #b0bbbd;
+}
+
+.disabled {
+  color: #b0bbbd;
+}
+
+.suggestion {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
