@@ -1,5 +1,5 @@
 Citizen.CreateThread(function()
 	TriggerEvent('chat:addSuggestion', '/tweet', 'Twitter Message', { { name = 'MESSAGE', help = 'Your Message' } } )
-    TriggerEvent('chat:addSuggestion', wx.Commands['Here'], "Place persistent text below your character",  { { name = "Text", help = "Example: /"..wx.Commands['Here']..".. is a chair" } } )
-    TriggerEvent('chat:addSuggestion', wx.Commands['Status'], "Shows persistent text for your character",  { { name = "Text", help = "Your text" } } )
+    TriggerEvent('chat:addSuggestion', "/"..wx.Commands['Here'], "Place persistent text below your character",  { { name = "Text", help = "Example: /"..wx.Commands['Here']..".. is a chair" } } )
+    TriggerEvent('chat:addSuggestion', "/"..wx.Commands['Status'], "Shows persistent text for your character",  { { name = "Text", help = "Your text" } } )
 end)

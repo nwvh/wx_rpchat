@@ -5,10 +5,9 @@ description 'Advanced ESX RP Chat for FiveM'
 lua54 'yes'
 
 server_scripts {
-	'@mysql-async/lib/MySQL.lua',
-	'server/*.lua'
+	'server/*.lua',
+	'configs/webhook_config.lua' -- don't share the webhooks with the client, duh
 }
-
 client_scripts {
 	'client/*.lua'
 }
