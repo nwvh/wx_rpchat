@@ -82,7 +82,7 @@ AddEventHandler('wx_rpchat:sendLocalOOC', function(playerId, title, message, col
     local sourceCoords, targetCoords = GetEntityCoords(sourcePed), GetEntityCoords(targetPed)
     if not cooldown and targetPed == sourcePed then
       cooldown = true
-      Citizen.SetTimeout(wx.loocCooldown,function ()
+      Citizen.SetTimeout(1000,function ()
         cooldown = false
       end)
       if targetPed == source or #(sourceCoords - targetCoords) < 35 then
@@ -94,13 +94,15 @@ AddEventHandler('wx_rpchat:sendLocalOOC', function(playerId, title, message, col
     else
       if targetPed == sourcePed then
         TriggerEvent('chat:addMessage', {
-				template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #c1121f; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-triangle-exclamation"></i> <b>ERROR</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font>   <font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">You need to wait before sending another L-OOC message!</font></div>',
+				template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #c1121f; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-triangle-exclamation"></i> <b>CHYBA</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font>   <font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">Do L-OOC nemůžeš psát tak rychle!</font></div>',
         args = {}
         })
       end
+      
   end
 end
 end)
+
 
 RegisterNetEvent('3dme:triggerDisplay')
 AddEventHandler('3dme:triggerDisplay', function(text, source)

@@ -6,21 +6,14 @@ function havePermission(xPlayer)
 	return false
 end
 
-function GetRealPlayerName(playerId)
-  local xPlayer = ESX.GetPlayerFromId(playerId)
-
-  if xPlayer then
-      if wx.OnlyInicials then
-          local name = xPlayer.get('firstName')
-          name = string.sub(name, 1, 1)
-          local surname = xPlayer.get('lastName')
-          surname = string.sub(surname, 1, 1)
-          local shortName = name..". "..surname..". "
-          return shortName
-      else
-          return xPlayer.getName()
+function CharName(source)
+  local xPlayer = ESX.GetPlayerFromId(source)
+  if xPlayer then 
+    if xPlayer.getName() == GetPlayerName(source) then 
+      local result = MySQL.Sync.fetchAll('SELECT firstname, lastname FROM users WHERE identifier = @identifier', {['@identifier'] = GetPlayerIdentifiers(source)[1]})
+      if result[1] and result[1].firstname and result[1].lastname then
+        return ('%s %s'):format(result[1].firstname, result[1].lastname)
       end
-  else
-      return GetPlayerName(playerId)
+    end
   end
 end

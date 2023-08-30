@@ -49,6 +49,7 @@ RegisterCommand(wx.Commands['Here'], function(source, args, rawCommand)
     else
         Notify('Error','You must be spawned')
     end
+    
 end, false)
 
 
@@ -136,9 +137,12 @@ Citizen.CreateThread(function()
 end)
 
 function DrawText3DsH(x,y,z, text)
+    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+    local pX, pY, pZ = table.unpack(GetGameplayCamCoords())
+    local font = fontId
 
-    RegisterFontFile('BBN')
-    fontId = RegisterFontId('BBN')
+    RegisterFontFile('BBN') -- název soubory gfx bez koncovky gfx
+    fontId = RegisterFontId('BBN') -- nazev ktery jsme dávali do in.xml
 
     SetTextScale(0.55, 0.31)
     SetTextFont(fontId)
@@ -151,13 +155,16 @@ function DrawText3DsH(x,y,z, text)
     
     DrawText(_x, _y)
     local factor = (string.len(text)) / 320
-    if not wx.TransparentStatusHere then
-        DrawRect(_x,_y+0.0135, 0.025+ factor, 0.03, 0, 0, 0, 68)
-    end
+    -- DrawRect(_x,_y+0.0135, 0.025+ factor, 0.03, 0, 0, 0, 68)
 end
 
 function DrawText3DsS(x,y,z, text)
-    fontId = RegisterFontId('BBN')
+    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+    local pX, pY, pZ = table.unpack(GetGameplayCamCoords())
+    local font = fontId
+
+    RegisterFontFile('BBN') -- název soubory gfx bez koncovky gfx
+    fontId = RegisterFontId('BBN') -- nazev ktery jsme dávali do in.xml
 
     SetTextScale(0.55, 0.31)
     SetTextFont(fontId)
@@ -170,7 +177,5 @@ function DrawText3DsS(x,y,z, text)
     
     DrawText(_x, _y)
     local factor = (string.len(text)) / 320
-    if not wx.TransparentStatusHere then
-        DrawRect(_x,_y+0.0135, 0.025+ factor, 0.03, 0, 0, 0, 68)
-    end
+    -- DrawRect(_x,_y+0.0135, 0.025+ factor, 0.03, 0, 0, 0, 68)
 end

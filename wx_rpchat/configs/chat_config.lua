@@ -1,22 +1,9 @@
 wx = {}
 
-wx.enableLogs = true -- Enable webhooks logs? Make sure to add your webhooks in configs/webhook_config.lua
 wx.MaxHereTexts = 5 -- How many /here texts can one player place?
 wx.MeDoDisplayTime = 5000 -- [in ms] How long should /me and /do 3D texts be displayed
-wx.TransparentStatusHere = true -- The text of /here and /status commands will have no background
 
 wx.OnlyInicials = true -- In commands like /me, /do, use only char name inicials. (John Doe -> J. D.)
-
-wx.loocCooldown = 1500 -- in ms, cooldown between L-OOC messages. Set to 0 to disable
-
-wx.LOOCPrefixes = {
-    enabled = true, -- Enable group prefixes for L-OOC (Example: Group Admin: [L-OOC] [ADMIN] Player: Hello!)
---  GROUP       PREFIX
-    ["admin"] = "ADMIN",
-    ["dev"] = "DEVELOPER",
-    ["TRIAL"] = "TRIAL STAFF",
-    ["staff"] = "STAFF",
-}
 
 wx.Commands = {
 -- Don't Touch             /command name
@@ -39,7 +26,8 @@ wx.Jobs = {
     ['LSSD']  =   'sheriff',
 }
 
-wx.AdminGroups = { -- Your staff groups, they will see player's reports, be able to use admin chat and the staff anouncement command
+wx.AdminGroups = {
+-- These groups will have access to /staff, admin chat messages and player reports
 -- GROUP NAME   true/false
     ["admin"]    = true,
     ["mod"]      = true,
@@ -51,9 +39,27 @@ wx.AdminGroups = { -- Your staff groups, they will see player's reports, be able
 wx.AutoMessages = true
 wx.AutoMessageInterval = 25 -- In minutes
 wx.AutoMessagesList = { -- List of messages that will be randomly sent
-    "If you have any question, you can ask any of our staff!",
-    "In case of any issues, you can always use /report",
-    "Make sure to join our discord! discord.gg/yourinvite",
+    "Make sure to join our discord!",
+    "Welcome, in case of any issues don't hesitate to contact our admins using /report!",
+}
+
+wx.Suggestions = { -- /command suggestions that will pop up in chat (Make sure to add /)
+    ['/me'] = {
+        description = "/me command",
+        argument = { ["MESSAGE"] = "[TEXT]" }
+    },
+    ['/do'] = {
+        description = "/do command",
+        argument = { ["MESSAGE"] = "[TEXT]" }
+    },
+    ['/report'] = {
+        description = "Command using to communicate with admins",
+        argument = { ["REPORT CONTENT"] = "What do you want to report?" }
+    },
+    ['/dm'] = {
+        description = "[ADMIN ONLY] Private message command",
+        argument = { ["ID"] = "Player ID" }
+    },
 }
 
 Notify = function(title,desc) -- You can add your own notify function

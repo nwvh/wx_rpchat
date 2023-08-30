@@ -1,5 +1,9 @@
 Citizen.CreateThread(function()
-	TriggerEvent('chat:addSuggestion', '/tweet', 'Twitter Message', { { name = 'MESSAGE', help = 'Your Message' } } )
-    TriggerEvent('chat:addSuggestion', "/"..wx.Commands['Here'], "Place persistent text below your character",  { { name = "Text", help = "Example: /"..wx.Commands['Here']..".. is a chair" } } )
-    TriggerEvent('chat:addSuggestion', "/"..wx.Commands['Status'], "Shows persistent text for your character",  { { name = "Text", help = "Your text" } } )
+    for command, options in pairs(wx.Suggestions) do
+        for k,v in pairs(options.argument) do
+            TriggerEvent('chat:addSuggestion', command, options.description,  { { name = k, help = v } } )
+        end
+    end
 end)
+
+-- @todo: rewrite. works, but could be done better

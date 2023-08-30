@@ -15,7 +15,7 @@ RegisterCommand("report", function(source, args, raw)
 	local name = GetPlayerName(source)
 	local content = table.concat(args, " ")
 	TriggerClientEvent("wx_rpchat:send", -1, source, name, content)
-
+	--@todo: report logs
 end, false)
 
 

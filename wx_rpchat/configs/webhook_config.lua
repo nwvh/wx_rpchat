@@ -1,13 +1,11 @@
 Webhooks = {
-    Color = 8388736, -- Decimal value, color of the webhook (Default orange)
-    loocwebhook = "",
-    mewebhook = "",
-    dowebhook = "",
-    trywebhook = "",
-    tweetwebhook = "",
-    adwebhook = "",
-    blackmarketwebhook = "",
-    staffwebhook = "",
-    statuswebhook = "",
-    herewebhook = "",
+    --[[ L-OOC Messages ]] ['loocwebhook'] = "",
+    --[[ /ME Messages ]] ['mewebhook'] = "",
+    --[[ /DO Messages ]] ['dowebhook'] = "",
+    --[[ /TRY Messages ]] ['trywebhook'] = "",
+    --[[ /TWEET Messages ]] ['tweetwebhook'] = "",
+    --[[ /AD Messages ]] ['adwebhook'] = "",
+    --[[ /STAFF Messages]] ['staffwebhook'] = "",
+    --[[ /HERE Messages]] ['herewebhook'] = "",
+    --[[ /STATUS Messages]] ['statuswebhook'] = "",
 }
