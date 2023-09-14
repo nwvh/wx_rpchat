@@ -1,6 +1,6 @@
 local displayedMessages = {}
-local stavwebhook = Webhooks['statuswebhook']
-local zdewebhook = Webhooks['zdewebhook']
+local stavwebhook = Webhooks['status']
+local zdewebhook = Webhooks['here']
 
 RegisterNetEvent('chat:SyncMessage')
 AddEventHandler('chat:SyncMessage', function(message, coords)
@@ -17,7 +17,7 @@ AddEventHandler('chat:SyncMessage', function(message, coords)
         ip = v
       end
     end
-    log(("**%s*"):format(wx.Commands['Status']), source,GetPlayerName(source), message.message.." - ["..message.coords.."]",steam,discord,ip,zdewebhook)
+    log("**/here**", source,GetPlayerName(source), message.message.." - ["..message.coords.."]",steam,discord,ip,zdewebhook)
     TriggerClientEvent('chat:SetMessage', -1, message, coords)
 end)
 
@@ -66,8 +66,10 @@ RegisterCommand(wx.Commands['Status'], function(source, args, rawCommand)
             local message = rawCommand:sub(6)
             playerStatus[_source] = message
             TriggerClientEvent('wx_rpchat:SetPlayerStatus', -1, _source, message)
-            log("**/stav**", source,GetPlayerName(source), message,steam,discord,ip,stavwebhook)
+            log("**/status**", source,GetPlayerName(source), message,steam,discord,ip,stavwebhook)
             Notify('Success',"You are now showing your status: "..message)
+            local playerName = GetPlayerName(_source)
+            local steam = GetPlayerIdentifiers(_source)[1]
         end
     end
 end, false)

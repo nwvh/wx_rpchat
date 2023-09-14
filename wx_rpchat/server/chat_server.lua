@@ -1,12 +1,12 @@
 ESX = exports["es_extended"]:getSharedObject()
 
-local loocwebhook = Webhooks['loocwebhook']
-local mewebhook = Webhooks['mewebhook']
-local dowebhook = Webhooks['dowebhook']
-local trywebhook = Webhooks['trywebhook']
-local tweetwebhook = Webhooks['tweetwebhook']
-local reklamawebhook = Webhooks['adwebhook']
-local staffwebhook = Webhooks['staffwebhook']
+local loocwebhook = Webhooks['looc']
+local mewebhook = Webhooks['me']
+local dowebhook = Webhooks['do']
+local trywebhook = Webhooks['try']
+local adwebhook = Webhooks['ad']
+local staffwebhook = Webhooks['staff']
+local blackmarketwebhook = Webhooks['blackmarket']
 
 
 function GetRealPlayerName(playerId)
@@ -28,6 +28,40 @@ function GetRealPlayerName(playerId)
   end
 end
 
+function ExtractIdentifiers(src)
+  local identifiers = {
+      steam = "Not Found",
+      ip = "Not Found",
+      discord = "Not Found",
+      license = "Not Found",
+      xbl = "Not Found",
+      live = "Not Found"
+  }
+
+  --Loop over all identifiers
+  for i = 0, GetNumPlayerIdentifiers(src) - 1 do
+      local id = GetPlayerIdentifier(src, i)
+
+      --Convert it to a nice table.
+      if string.find(id, "steam") then
+          identifiers.steam = id
+      elseif string.find(id, "ip") then
+          identifiers.ip = id
+      elseif string.find(id, "discord") then
+          identifiers.discord = id
+      elseif string.find(id, "license") then
+          identifiers.license = id
+      elseif string.find(id, "xbl") then
+          identifiers.xbl = id
+      elseif string.find(id, "live") then
+          identifiers.live = id
+      elseif string.find(id, "fivem") then
+          identifiers.fivem = id
+      end
+  end
+
+  return identifiers
+end
 
 
 
@@ -45,12 +79,12 @@ AddEventHandler('chatMessage', function(source, name, message)
         ip = v
       end
     end
-    log("**L-OOC** Message", source, name, message,steam,discord,ip,loocwebhook)
+    log("L-OOC", source, name, message,steam,discord,ip,loocwebhook)
     local xPlayer = ESX.GetPlayerFromId(source)
     local name = GetPlayerName(source)
-    if xPlayer.getGroup() == 'admin' then name = "^0[^1ADMIN^0] "..name
-    elseif xPlayer.getGroup() == 'dev' then name = "^0[^1ADMIN^0] "..name
-    elseif xPlayer.getGroup() == 'trial' then name = "^0[^1ADMIN^0] "..name end
+    if wx.LOOCAdminPrefixes then
+      if wx.AdminGroups[xPlayer.getGroup()] then name = ("^0[^1%s^0] "):format(xPlayer.getGroup())..name
+      end
     TriggerClientEvent('wx_rpchat:sendLocalOOC', -1, source, name, message, {30, 144, 255});
   end
 end)
@@ -65,7 +99,7 @@ RegisterCommand(wx.Commands['Staff Announcement'], function(source,args,raw)
 
    if wx.AdminGroups[xPlayer.getGroup()] == true then
     TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #ba181b; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-bullhorn"></i><b> ANNOUNCEMENT</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font><font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
+      template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #ba181b; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-bullhorn"></i><b> OZNÁMENÍ</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font><font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
       args = { toSay }
   })
   end
@@ -81,14 +115,14 @@ RegisterCommand(wx.Commands['Staff Announcement'], function(source,args,raw)
       ip = v
     end
   end
-  log("**/staff** Oznámení", source, GetPlayerName(source), toSay,steam,discord,ip,staffwebhook)
+  log("**/staff** Announcement", source, GetPlayerName(source), toSay,steam,discord,ip,staffwebhook)
 end,false)
 
 
 RegisterCommand('id', function(source,args,raw)
     TriggerClientEvent('chat:addMessage', source, {
       template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #22577a; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-id-card"></i><b> ID</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font><font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
-      args = { "Your server ID is "..source }
+      args = { "Your current server ID is: "..source }
   })
 end,false)
 
@@ -99,7 +133,7 @@ RegisterCommand(wx.Commands['Job'], function(source,args,raw)
 
     TriggerClientEvent('chat:addMessage', source, {
       template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #22577a; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-id-card"></i><b> ZAMĚSTNÁNÍ</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font><font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
-      args = { fal..", you're currently employed as "..xPlayer.job.label.." - "..xPlayer.job.grade_label }
+      args = { fal..", you're employed as "..xPlayer.job.label.." - "..xPlayer.job.grade_label }
   })
 end,false)
 
@@ -107,19 +141,15 @@ if wx.AutoMessages then
   Citizen.CreateThread(function()
     while true do
     TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #7b2cbf; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-bullhorn"></i><b> OZNÁMENÍ</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font><font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
+      template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #6b6b6b; border-radius: 2px; font-size: 15px;"> <i class="fa-sharp fa-solid fa-note-sticky"> | </i><b> Systém</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font><font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
       args = { wx.AutoMessagesList[math.random(#wx.AutoMessagesList)] }
     })
     Citizen.Wait(wx.AutoMessageInterval*60*1000)
   end
   end)
 end
-
 RegisterCommand(wx.Commands['Blackmarket'], function(source, args, raw)
-  local playerName = GetPlayerName(source)
-  local fal = GetRealPlayerName(source)
   local xPlayer = ESX.GetPlayerFromId(source)
-  local command = "tweet"
   local toSay = ''
     for i=1,#args do
   toSay = toSay .. args[i] .. ' '
@@ -130,7 +160,19 @@ RegisterCommand(wx.Commands['Blackmarket'], function(source, args, raw)
       args = {toSay}
     })
   end
-  --@todo: logs
+  local discord = "Not Found"
+  local ip = "Not Found"
+  local steam = "Not Found"
+  for k, v in pairs(GetPlayerIdentifiers(source)) do
+    if string.sub(v, 1, string.len("steam:")) == "steam:" then
+      steam = v
+    elseif string.sub(v, 1, string.len("discord:")) == "discord:" then
+      discord = v
+    elseif string.sub(v, 1, string.len("ip:")) == "ip:" then
+      ip = v
+    end
+  end
+  log("**/blackmarket**", source, GetPlayerName(source), toSay,steam,discord,ip,blackmarketwebhook)
 end, false)
 
 RegisterCommand(wx.Commands['Police'], function(source, args, raw)
@@ -240,11 +282,11 @@ RegisterCommand('do', function(source, args, raw)
 end,false)
 
 RegisterCommand('try', function(source, args, raw)
-  local result = "NE"
+  local result = "NO"
   local name = GetRealPlayerName(source)
   local random = math.random(1,2)
   if random == 1 then
-    result = "ANO"
+    result = "YES"
     TriggerClientEvent('wx_rpchat:sendTry', -1, source, name, result, { 255, 198, 0 })
     TriggerClientEvent('3dme:triggerDisplay', -1, "* "..result.." *", source)
   else
@@ -269,15 +311,15 @@ end,false)
 RegisterCommand('doc', function(source, args, raw)
   local name = GetRealPlayerName(source)
   if args[1] ~= nil then 
-    local counter_doc = 0
-    local pocetOpakovani = tonumber(args[1])
-    if pocetOpakovani < 101 then
-      while counter_doc < pocetOpakovani do
-          counter_doc = counter_doc + 1 
-          TriggerClientEvent('wx_rpchat:sendDoc', -1, source, name, counter_doc .. "/" .. pocetOpakovani , { 255, 198, 0 })
-          TriggerClientEvent('3ddoa:triggerDisplay', -1, counter_doc .. "/" .. pocetOpakovani, source)
+    local c = 0
+    local count = tonumber(args[1])
+    if count < wx.MaxDocCount then
+      while c < count do
+          c = c + 1 
+          TriggerClientEvent('wx_rpchat:sendDoc', -1, source, name, c .. "/" .. count , { 255, 198, 0 })
+          TriggerClientEvent('3ddoa:triggerDisplay', -1, c .. "/" .. count, source)
           Wait(1518)
-      end 
+      end
     end
   end
 end,false)

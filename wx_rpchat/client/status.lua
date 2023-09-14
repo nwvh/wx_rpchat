@@ -4,7 +4,7 @@ ESX = exports["es_extended"]:getSharedObject()
 local playerLoaded = false
 Citizen.CreateThread(function()
     while ESX.GetPlayerData().job == nil do -- Wait for player to choose character
-		Citizen.Wait(10)
+		Citizen.Wait(100)
 	end
     playerLoaded = true
 end)
@@ -137,13 +137,9 @@ Citizen.CreateThread(function()
 end)
 
 function DrawText3DsH(x,y,z, text)
-    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
-    local pX, pY, pZ = table.unpack(GetGameplayCamCoords())
-    local font = fontId
-
-    RegisterFontFile('BBN') -- název soubory gfx bez koncovky gfx
-    fontId = RegisterFontId('BBN') -- nazev ktery jsme dávali do in.xml
-
+    local _, x1, y1 = World3dToScreen2d(x, y, z)
+    RegisterFontFile('BBN')
+    local fontId = RegisterFontId('BBN')
     SetTextScale(0.55, 0.31)
     SetTextFont(fontId)
     SetTextProportional(1)
@@ -153,19 +149,17 @@ function DrawText3DsH(x,y,z, text)
     SetTextColour(255, 255, 255, 215)
     AddTextComponentString(text)
     
-    DrawText(_x, _y)
+    DrawText(x1, y1)
     local factor = (string.len(text)) / 320
-    -- DrawRect(_x,_y+0.0135, 0.025+ factor, 0.03, 0, 0, 0, 68)
+    if not wx.TransparentStatusHere then
+        DrawRect(x1,y1+0.0135, 0.025+ factor, 0.03, 0, 0, 0, 68)
+    end
 end
 
 function DrawText3DsS(x,y,z, text)
-    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
-    local pX, pY, pZ = table.unpack(GetGameplayCamCoords())
-    local font = fontId
-
-    RegisterFontFile('BBN') -- název soubory gfx bez koncovky gfx
-    fontId = RegisterFontId('BBN') -- nazev ktery jsme dávali do in.xml
-
+    local _, _x, _y = World3dToScreen2d(x, y, z)
+    RegisterFontFile('BBN')
+    local fontId = RegisterFontId('BBN')
     SetTextScale(0.55, 0.31)
     SetTextFont(fontId)
     SetTextProportional(1)
@@ -177,5 +171,7 @@ function DrawText3DsS(x,y,z, text)
     
     DrawText(_x, _y)
     local factor = (string.len(text)) / 320
-    -- DrawRect(_x,_y+0.0135, 0.025+ factor, 0.03, 0, 0, 0, 68)
+    if wx.TransparentStatusHere then
+        DrawRect(_x,_y+0.0135, 0.025+ factor, 0.03, 0, 0, 0, 68)
+    end
 end

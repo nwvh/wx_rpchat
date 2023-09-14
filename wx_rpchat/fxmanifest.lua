@@ -2,6 +2,7 @@ fx_version 'cerulean'
 game 'gta5'
 author 'wx / woox'
 description 'Advanced ESX RP Chat for FiveM'
+version '2.0'
 lua54 'yes'
 
 server_scripts {
