@@ -1,3 +1,1 @@
-# Chat
-
-Dependency for lunar_chat.
+# Use this chat version for fontawesome icon support (or for new design)

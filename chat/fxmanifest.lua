@@ -1,4 +1,4 @@
-description 'chat management stuff'
+description 'Default chat resource, but redesigned and made to work with fontawesome icons'
 
 ui_page 'html/index.html'
 
