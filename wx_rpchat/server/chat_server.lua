@@ -181,6 +181,18 @@ RegisterCommand(wx.Commands['Blackmarket'], function(source, args, raw)
   log("**/blackmarket**", source, GetPlayerName(source), toSay,steam,discord,ip,blackmarketwebhook)
 end, false)
 
+RegisterCommand(wx.Commands['Twitter'], function(source, args, raw)
+  local fal = GetRealPlayerName(source)
+  local toSay = ''
+  for i=1,#args do
+    toSay = toSay .. args[i] .. ' '
+  end
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.75); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #758bfd; border-radius: 2px; font-size: 15px;"> <i class="fa-brands fa-twitter"></i><b> Twitter</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font><b>@{0}</b>:<font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{1}</font></div>',
+      args = {fal, toSay}
+  })
+end, false)
+
 RegisterCommand(wx.Commands['Police'], function(source, args, raw)
   local playerName = GetPlayerName(source)
   local xPlayer = ESX.GetPlayerFromId(source)
