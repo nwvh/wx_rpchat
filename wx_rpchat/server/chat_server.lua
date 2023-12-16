@@ -82,12 +82,13 @@ AddEventHandler('chatMessage', function(source, name, message)
     log("L-OOC", source, name, message,steam,discord,ip,loocwebhook)
     local xPlayer = ESX.GetPlayerFromId(source)
     local name = GetPlayerName(source)
+    local admin = false
     if wx.LOOCAdminPrefixes then
-      if wx.AdminGroups[xPlayer.getGroup()] then name = ("^0[^1%s^0] "):format(string.upper(xPlayer.getGroup()))..name
-      end
-    TriggerClientEvent('wx_rpchat:sendLocalOOC', -1, source, name, message, {30, 144, 255});
+      if wx.AdminGroups[xPlayer.getGroup()] then admin = true end
+    end
+    TriggerClientEvent('wx_rpchat:sendLocalOOC', -1, source, name, message, admin);
   end
-end
+
 end)
 
 
@@ -100,7 +101,15 @@ RegisterCommand(wx.Commands['Staff Announcement'], function(source,args,raw)
 
    if wx.AdminGroups[xPlayer.getGroup()] == true then
     TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #ba181b; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-bullhorn"></i><b> OZNÁMENÍ</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font><font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
+      template = [[
+        <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw; background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+        <font style="padding: 0.15vw; margin: 0.22vw; background-color: #626066; padding-left: 1%; border-radius: 8px; border: #9e9e9e solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.55)">
+            <font style="font-weight: 600;">ANNOUNCEMENT</font>
+        </font>
+        <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+        <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400"> {0}</font>
+    </div>
+      ]],
       args = { toSay }
   })
   end
@@ -122,8 +131,16 @@ end,false)
 
 RegisterCommand('id', function(source,args,raw)
     TriggerClientEvent('chat:addMessage', source, {
-      template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #22577a; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-id-card"></i><b> ID</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font><font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
-      args = { "Your current server ID is: "..source }
+      template = [[
+        <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+        <font style="padding: 0.15vw; margin: 0.22vw; background-color: #581845; padding-left: 1%; border-radius: 8px; border: #781C5D solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(120, 20, 90, 0.55)">
+            <font style="font-weight: 600;">SERVER</font>
+        </font>
+        <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400">Your current server ID:</font>
+        <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400"> {0}</font>
+    </div>
+      ]],
+    args = { source }
   })
 end,false)
 
@@ -133,8 +150,15 @@ RegisterCommand(wx.Commands['Job'], function(source,args,raw)
     local xPlayer = ESX.GetPlayerFromId(source)
 
     TriggerClientEvent('chat:addMessage', source, {
-      template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #22577a; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-id-card"></i><b> JOB</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font><font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
-      args = { fal..", you're employed as "..xPlayer.job.label.." - "..xPlayer.job.grade_label }
+      template = [[
+        <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+        <font style="padding: 0.15vw; margin: 0.22vw; background-color: #B05DCB; padding-left: 1%; border-radius: 8px; border: #CD4DF7 solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(200, 90, 225, 0.55)">
+            <font style="font-weight: 600;">SERVER</font>
+        </font>
+        <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+        <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400"> {0}</font>
+    </div>
+      ]],      args = { fal..", you're employed as "..xPlayer.job.label.." - "..xPlayer.job.grade_label }
   })
 end,false)
 
@@ -142,8 +166,15 @@ if wx.AutoMessages then
   Citizen.CreateThread(function()
     while true do
     TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #6b6b6b; border-radius: 2px; font-size: 15px;"> <i class="fa-sharp fa-solid fa-note-sticky"> | </i><b> SYSTEM</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font><font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
-      args = { wx.AutoMessagesList[math.random(#wx.AutoMessagesList)] }
+      template = [[
+        <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+        <font style="padding: 0.15vw; margin: 0.22vw; background-color: #B05DCB; padding-left: 1%; border-radius: 8px; border: #CD4DF7 solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(200, 90, 225, 0.55)">
+            <font style="font-weight: 600;">SYSTEM</font>
+        </font>
+        <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+        <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400"> {0}</font>
+    </div>
+      ]],      args = { wx.AutoMessagesList[math.random(#wx.AutoMessagesList)] }
     })
     Citizen.Wait(wx.AutoMessageInterval*60*1000)
   end
@@ -157,14 +188,131 @@ RegisterCommand(wx.Commands['Blackmarket'], function(source, args, raw)
   end
   if xPlayer.job.name ~= wx.Jobs['LSPD'] then
     TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #343a40; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-skull-crossbones"></i><b> BLACK MARKET</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font><font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
-      args = {toSay}
+      template = [[
+        <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+        <font style="padding: 0.15vw; margin: 0.22vw; background-color: #626066; padding-left: 1%; border-radius: 8px; border: #9e9e9e solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.55)">
+        <font style="font-weight: 600;">ID: {0}</font>
+    </font>
+        <font style="padding: 0.15vw; margin: 0.22vw; background-color: #1F1C20; padding-left: 1%; border-radius: 8px; border: #363437 solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(50, 50, 50, 0.55)">
+            <font style="font-weight: 600;">BLACKMARKET</font>
+        </font>
+        <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+        <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400"> {1}</font>
+    </div>
+      ]],
+      args = {source, toSay}
     })
   else
     TriggerClientEvent('chat:addMessage', source, {
-      template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #c1121f; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-triangle-exclamation"></i> <b>ERROR</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font>   <font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">You\'re not allowed to access this chat with your current job</font></div>',
+      template = [[
+        <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+        <font style="padding: 0.15vw; margin: 0.22vw; background-color: #922a2a; padding-left: 1%; border-radius: 8px; border: #c72f2f solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(156, 21, 21, 0.55)">
+            <font style="font-weight: 600;">ERROR</font>
+        </font>
+        <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+        <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400">You cannot use the blackmarket as LSPD</font>
+    </div>
+      ]],
       args = {}
     })
+
+  end
+  local discord = "Not Found"
+  local ip = "Not Found"
+  local steam = "Not Found"
+  for k, v in pairs(GetPlayerIdentifiers(source)) do
+    if string.sub(v, 1, string.len("steam:")) == "steam:" then
+      steam = v
+    elseif string.sub(v, 1, string.len("discord:")) == "discord:" then
+      discord = v
+    elseif string.sub(v, 1, string.len("ip:")) == "ip:" then
+      ip = v
+    end
+  end
+  log("**/blackmarket**", source, GetPlayerName(source), toSay,steam,discord,ip,blackmarketwebhook)
+end, false)
+local adcooldown = {}
+RegisterCommand(wx.Commands['Advertisement'], function(source, args, raw)
+  local xPlayer = ESX.GetPlayerFromId(source)
+  local toSay = ''
+    for i=1,#args do
+  toSay = toSay .. args[i] .. ' '
+  end
+  if xPlayer.getAccount('bank').money >= wx.AdCost then
+    if not adcooldown[source] then
+      if toSay == '' then
+        return       TriggerClientEvent('chat:addMessage', source, {
+          template = [[
+            <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+            <font style="padding: 0.15vw; margin: 0.22vw; background-color: #922a2a; padding-left: 1%; border-radius: 8px; border: #c72f2f solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(156, 21, 21, 0.55)">
+                <font style="font-weight: 600;">ERROR</font>
+            </font>
+            <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+            <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400">Advertisement content cannot be empty</font>
+        </div>
+          ]],
+          args = {wx.AdCost}
+        })
+      end
+      xPlayer.removeAccountMoney('bank',wx.AdCost)
+      adcooldown[source] = true
+      Citizen.SetTimeout(wx.AdCooldown,function()
+      adcooldown[source] = false
+      end)
+      TriggerClientEvent('chat:addMessage', -1, {
+        template = [[
+          <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+          <font style="padding: 0.15vw; margin: 0.22vw; background-color: #626066; padding-left: 1%; border-radius: 8px; border: #9e9e9e solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.55)">
+          <font style="font-weight: 600;">ID: {0}</font>
+      </font>
+          <font style="padding: 0.15vw; margin: 0.22vw; background-color: #A3B93D; padding-left: 1%; border-radius: 8px; border: #BBD92F solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(160, 180, 50, 0.55)">
+              <font style="font-weight: 600;">ADVERTISEMENT</font>
+          </font>
+          <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+          <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400"> {1}</font>
+      </div>
+        ]],
+        args = {source, toSay}
+      })
+      TriggerClientEvent('chat:addMessage', source, {
+        template = [[
+          <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+          <font style="padding: 0.15vw; margin: 0.22vw; background-color: #31BA4C; padding-left: 1%; border-radius: 8px; border: #2FD951 solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(20, 200, 21, 0.55)">
+            <font style="font-weight: 600;">SUCCESS</font>
+          </font>
+          <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+          <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400">Advertisement has been sent! You have paid {0}$</font>
+        </div>
+          ]],				args = {wx.AdCost}
+      })
+    else
+      TriggerClientEvent('chat:addMessage', source, {
+        template = [[
+          <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+          <font style="padding: 0.15vw; margin: 0.22vw; background-color: #922a2a; padding-left: 1%; border-radius: 8px; border: #c72f2f solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(156, 21, 21, 0.55)">
+              <font style="font-weight: 600;">ERROR</font>
+          </font>
+          <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+          <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400">You have sent an advertisement recently, wait before sending another one.</font>
+      </div>
+        ]],
+        args = {wx.AdCost}
+      })
+    end
+  else
+    TriggerClientEvent('chat:addMessage', source, {
+      template = [[
+        <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+        <font style="padding: 0.15vw; margin: 0.22vw; background-color: #922a2a; padding-left: 1%; border-radius: 8px; border: #c72f2f solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(156, 21, 21, 0.55)">
+            <font style="font-weight: 600;">ERROR</font>
+        </font>
+        <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+        <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400">You don't have enough money, you need {0}$ in your bank.</font>
+    </div>
+      ]],
+      args = {wx.AdCost}
+    })
+
   end
   local discord = "Not Found"
   local ip = "Not Found"
@@ -188,8 +336,18 @@ RegisterCommand(wx.Commands['Twitter'], function(source, args, raw)
     toSay = toSay .. args[i] .. ' '
   end
   TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.75); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #758bfd; border-radius: 2px; font-size: 15px;"> <i class="fa-brands fa-twitter"></i><b> Twitter</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font><b>@{0}</b>:<font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{1}</font></div>',
-      args = {fal, toSay}
+    template = [[
+      <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+      <font style="padding: 0.15vw; margin: 0.22vw; background-color: #626066; padding-left: 1%; border-radius: 8px; border: #9e9e9e solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.55)">
+      <font style="font-weight: 600;">ID: {0}</font>
+  </font>
+      <font style="padding: 0.15vw; margin: 0.22vw; background-color: #1F1C20; padding-left: 1%; border-radius: 8px; border: #363437 solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(50, 50, 50, 0.55)">
+          <font style="font-weight: 600;"><i class="fa-brands fa-x-twitter"></i> / Twitter</font>
+      </font>
+      <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400">@{1}:</font>
+      <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400"> {2}</font>
+  </div>
+    ]],      args = {source,fal, toSay}
   })
 end, false)
 
@@ -203,13 +361,30 @@ RegisterCommand(wx.Commands['Police'], function(source, args, raw)
 end
   if xPlayer.job.name == wx.Jobs['LSPD'] then 
   TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #4361ee; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-handcuffs"></i> <b>Los Santos Police Department</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font>   <font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
-    args = {toSay}
+    template = [[
+      <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+      <font style="padding: 0.15vw; margin: 0.22vw; background-color: #626066; padding-left: 1%; border-radius: 8px; border: #9e9e9e solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.55)">
+      <font style="font-weight: 600;">ID: {0}</font>
+  </font>
+      <font style="padding: 0.15vw; margin: 0.22vw; background-color: #2C98CE; padding-left: 1%; border-radius: 8px; border: #40B9F6 solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(50, 50, 200, 0.55)">
+          <font style="font-weight: 600;">Los Santos Police Department</font>
+      </font>
+      <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+      <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400"> {1}</font>
+  </div>
+    ]],    args = {source,toSay}
     })
 else
   TriggerClientEvent('chat:addMessage', source, {
-    template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #c1121f; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-triangle-exclamation"></i> <b>ERROR</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font>   <font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
-    args = {"You must be an LSPD officer to use this command"}
+    template = [[
+      <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+      <font style="padding: 0.15vw; margin: 0.22vw; background-color: #922a2a; padding-left: 1%; border-radius: 8px; border: #c72f2f solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(156, 21, 21, 0.55)">
+          <font style="font-weight: 600;">ERROR</font>
+      </font>
+      <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+      <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400">{0}</font>
+  </div>
+    ]],    args = {"You must be an LSPD officer to use this command"}
   })
 end
 end, false)
@@ -224,13 +399,30 @@ RegisterCommand(wx.Commands['Sheriff'], function(source, args, raw)
 end
   if xPlayer.job.name == wx.Jobs['LSSD'] then 
   TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #f3722c; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-handcuffs"></i> <b>Los Santos Sheriff Department</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font>   <font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
-    args = {toSay}
+    template = [[
+      <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+      <font style="padding: 0.15vw; margin: 0.22vw; background-color: #626066; padding-left: 1%; border-radius: 8px; border: #9e9e9e solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.55)">
+          <font style="font-weight: 600;">ID: {0}</font>
+      </font>
+      <font style="padding: 0.15vw; margin: 0.22vw; background-color: #DBAB3D; padding-left: 1%; border-radius: 8px; border: #F2BA3B solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(255, 192, 50, 0.55)">
+          <font style="font-weight: 600;">Los Santos Sheriff Department</font>
+      </font>
+      <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+      <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400"> {1}</font>
+  </div>
+    ]],    args = {source,toSay}
     })
 else
   TriggerClientEvent('chat:addMessage', source, {
-    template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #c1121f; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-triangle-exclamation"></i> <b>ERROR</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font>   <font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
-    args = {"You must be an LSSD officer to use this command"}
+    template = [[
+      <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+      <font style="padding: 0.15vw; margin: 0.22vw; background-color: #922a2a; padding-left: 1%; border-radius: 8px; border: #c72f2f solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(156, 21, 21, 0.55)">
+          <font style="font-weight: 600;">ERROR</font>
+      </font>
+      <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+      <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400">{0}</font>
+  </div>
+    ]],    args = {"You must be an LSSD officer to use this command"}
   })
 end
 end, false)
@@ -245,13 +437,30 @@ RegisterCommand(wx.Commands['EMS'], function(source, args, raw)
 end
   if xPlayer.job.name == wx.Jobs['EMS'] then 
   TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #da627d; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-hospital-user"></i> <b>Emergency Medical Services</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font>   <font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
-    args = {toSay}
+    template = [[
+      <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+      <font style="padding: 0.15vw; margin: 0.22vw; background-color: #626066; padding-left: 1%; border-radius: 8px; border: #9e9e9e solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.55)">
+          <font style="font-weight: 600;">ID: {0}</font>
+      </font>
+      <font style="padding: 0.15vw; margin: 0.22vw; background-color: #922a2a; padding-left: 1%; border-radius: 8px; border: #c72f2f solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(156, 21, 21, 0.55)">
+          <font style="font-weight: 600;">Emergency Medical Services</font>
+      </font>
+      <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+      <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400"> {1}</font>
+  </div>
+    ]],    args = {source,toSay}
     })
 else
   TriggerClientEvent('chat:addMessage', source, {
-    template = '<div style="padding: 0.4vw; margin: 0.4vw; background-color: rgba(30, 30, 46, 0.45); border-radius: 3px;"><font style="padding: 0.22vw; margin: 0.22vw; background-color: #c1121f; border-radius: 2px; font-size: 15px;"> <i class="fa-solid fa-triangle-exclamation"></i> <b>ERROR</b></font><font style="background-color:rgba(20, 20, 20, 0); font-size: 17px; margin-left: 0px; padding-bottom: 2.5px; padding-left: 3.5px; padding-top: 2.5px; padding-right: 3.5px;border-radius: 0px;"></font>   <font style=" font-weight: 800; font-size: 15px; margin-left: 5px; padding-bottom: 3px; border-radius: 0px;"><b></b></font><font style=" font-weight: 200; font-size: 14px; border-radius: 0px;">{0}</font></div>',
-    args = {"You must be an EMS worker to use this command"}
+    template = [[
+      <div style="padding: 0.3vw; height: 1.5vw; margin: 0.5vw;  background-color: #222228ec; border-radius: 10px; padding-top: 0.35vw; border: 0.11vw solid #414146; box-shadow: 0px 0px 11px rgba(158, 158, 158, 0.35)">
+      <font style="padding: 0.15vw; margin: 0.22vw; background-color: #922a2a; padding-left: 1%; border-radius: 8px; border: #c72f2f solid 0.11vw; font-size: 12px; box-shadow: 0px 0px 11px rgba(156, 21, 21, 0.55)">
+          <font style="font-weight: 600;">ERROR</font>
+      </font>
+      <font style="font-size: 14px; padding-left: 5px; color: #c7c5c5; margin: auto; font-weight:400"></font>
+      <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400">{0}</font>
+  </div>
+    ]],    args = {"You must be an EMS worker to use this command"}
   })
 end
 end, false)

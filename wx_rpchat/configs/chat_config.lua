@@ -9,7 +9,9 @@ wx.OnlyInicials = true -- In commands like /me, /do, use only char name inicials
 wx.Reports = true -- Enable reports? /report
 wx.AdminChat = true -- Enable admin chat? /a
 wx.TransparentStatusHere = false -- Enable transparent background for /here and /status texts
-wx.LOOCAdminPrefixes = true -- Enable admin prefixes for LOOC messages. (If admin has group admin, the mssage will be - [ADMIN] PlayerName: Message )
+wx.AdCost = 1000 -- Price for sending advertisements, money will be checked and removed from bank
+wx.AdCooldown = 15000 -- in ms, how long should the cooldown between sending ads should be
+wx.LOOCAdminPrefixes = false -- Enable admin prefixes for LOOC messages. (If admin has group admin, the mssage will be - [ADMIN] PlayerName: Message )
 
 wx.Commands = {
 -- Don't Touch             /command name
@@ -32,6 +34,10 @@ wx.Suggestions = { -- /command suggestions that will pop up in chat (Make sure t
     },
     ['/do'] = {
         description = "/do command",
+        argument = { ["MESSAGE"] = "[TEXT]" }
+    },
+    [wx.Commands["Advertisement"]] = {
+        description = "Share an advertisement for all players, costs "..wx.AdCost.."$",
         argument = { ["MESSAGE"] = "[TEXT]" }
     },
     ['/report'] = {
