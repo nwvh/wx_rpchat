@@ -40,9 +40,7 @@
         </div>
       </div>
       <div class="chat-input" v-show="showInput">
-        <span class="prefix">➤</span>
-        <span v-if="loocTime > 0" class="suffix" v-bind:class="{ loocError: isError2 }">{{loocTime}}s</span>
-        <textarea :maxlength="maxAreaChar" v-model="message"
+        <textarea :maxlength="68" v-model="message"
                   ref="input"
                   type="text"
                   autofocus
