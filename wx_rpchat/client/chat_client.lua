@@ -143,7 +143,7 @@ AddEventHandler('wx_rpchat:sendLocalOOC', function(playerId, title, message, adm
               <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400"> {2}</font>
           </div>
             ]],
-            args = { source,title, message }
+            args = { playerId,title, message }
           })
         else
           TriggerEvent('chat:addMessage', {
@@ -159,7 +159,7 @@ AddEventHandler('wx_rpchat:sendLocalOOC', function(playerId, title, message, adm
               <font class="message" style="font-size: 14px; color: #a8a7a7; margin: auto; font-weight:400"> {2}</font>
           </div>
             ]],
-            args = { source,title, message }
+            args = { playerId,title, message }
           })
         end
     end
