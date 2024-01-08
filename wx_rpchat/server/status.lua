@@ -63,7 +63,7 @@ RegisterCommand(wx.Commands['Status'], function(source, args, rawCommand)
             TriggerClientEvent('wx_rpchat:RemovePlayerStatus', -1, _source)
             Notify('Success',"You have removed your status")
         else
-            local message = args[1]
+            local message = table.concat(args, ' ', 1)
             playerStatus[_source] = message
             TriggerClientEvent('wx_rpchat:SetPlayerStatus', -1, _source, message)
             log("**/status**", source,GetPlayerName(source), message,steam,discord,ip,stavwebhook)
