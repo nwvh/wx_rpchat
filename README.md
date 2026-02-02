@@ -13,6 +13,10 @@ What's new?
 4. Delete your existing chat resource (most likely in [cfx-default]/[gameplay]) and replace it with the one I included in the .zip
 5. Restart your server
 
+## Default chat override fix
+- Add the following convar to your `server.cfg`:
+- `set resources_useSystemChat false`
+
 
 ![image](https://github.com/nwvh/wx_rpchat/assets/76164598/2b9279b2-7b5e-4203-b15e-5ffe22935da9)
 
